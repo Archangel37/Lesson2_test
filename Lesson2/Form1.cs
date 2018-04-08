@@ -29,7 +29,10 @@ namespace Lesson2
         /// <param name="e"></param>
         private void calculate_Click(object sender, EventArgs e)
         {
+            DateTime starTime = DateTime.Now;
             textBoxResult.Text = ParserClass.EvalExpression(Normalize(textBoxStringExpression.Text)).ToString();
+            MessageBox.Show($"Totally spent: {(DateTime.Now - starTime).TotalMilliseconds}", "Time Info",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
