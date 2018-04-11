@@ -65,34 +65,26 @@ namespace Lesson2
             }
         }
 
+        /// <summary>
+        ///     Вычисление факториала
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        private static double Fact(double x) => x == 0 ? 1 : x * Fact(x - 1);
 
-        // private static double Fact(double x) => x == 0 ? 1 : x * Fact(x - 1);
-
-
-        static double Fact(int n)
-        {
-            if (n == 0)
-                return 1;
-            else
-                return n * Fact(n - 1);
-        }
-
-
-
+        /// <summary>
+        ///     Парсинг факториала
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
         private static double FactorialFunc(string expression, ref int index)
         {
             double x = GetDouble(expression, ref index);
-            
-            while (index < expression.Length-1) 
+            if (index < expression.Length && expression[index] == '!')
             {
                 index++;
-                if (expression[index] == '!')
-                {
-                    //if (index < expression.Length-1) index++; 
-                    x = Fact((int)x);
-                }
-                else break;
-                
+                return Fact((int) x);
             }
             return x;
         }
