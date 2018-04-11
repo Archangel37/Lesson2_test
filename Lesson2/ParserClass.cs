@@ -49,7 +49,7 @@ namespace Lesson2
         private static double MultDiv(string expr, ref int index)
         {
             //получение double из выражения
-            double x = GetDouble(expr, ref index);
+            double x = FactorialFunc(expr, ref index);
             //работает без условия на длину
             while (true)
             {
@@ -57,13 +57,46 @@ namespace Lesson2
                 if (op != '/' && op != '*') //"ленивый" булев оператор - если первое условие не выполняется, то второе не сравнивается
                     return x; //если операции не те, возвращаем "as is"
                 index++;
-                double y = GetDouble(expr, ref index);
+                double y = FactorialFunc(expr, ref index);
                 if (op == '/')
                     x /= y;
                 else if (op == '*')
                     x *= y;
             }
         }
+
+
+        // private static double Fact(double x) => x == 0 ? 1 : x * Fact(x - 1);
+
+
+        static double Fact(int n)
+        {
+            if (n == 0)
+                return 1;
+            else
+                return n * Fact(n - 1);
+        }
+
+
+
+        private static double FactorialFunc(string expression, ref int index)
+        {
+            double x = GetDouble(expression, ref index);
+            
+            while (index < expression.Length-1) 
+            {
+                index++;
+                if (expression[index] == '!')
+                {
+                    //if (index < expression.Length-1) index++; 
+                    x = Fact((int)x);
+                }
+                else break;
+                
+            }
+            return x;
+        }
+
 
         /// <summary>
         ///     (0) Получение числа из строки
