@@ -17,7 +17,7 @@ namespace Lesson2
         /// </summary>
         /// <param name="expression">Входная строка для нормализации (удаление пробелов)</param>
         /// <returns></returns>
-        public string Normalize(string expression)
+        private static string Normalize(string expression)
         => Regex.Replace(expression, @"\s+", string.Empty);
         
 
