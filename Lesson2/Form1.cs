@@ -22,17 +22,28 @@ namespace Lesson2
         
 
         /// <summary>
-        ///     Собственно, само использование класса парсера ParserClass-> Нормализуем текст -> Засовываем в char[] ->
+        ///     Собственно, само использование класса парсера ParserClass либо его потомка
         ///     Парсим/вычисляем
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void calculate_Click(object sender, EventArgs e)
         {
-            DateTime starTime = DateTime.Now;
-            textBoxResult.Text = ParserClass.EvalExpression(Normalize(textBoxStringExpression.Text)).ToString();
-            MessageBox.Show($"Totally spent: {(DateTime.Now - starTime).TotalMilliseconds}", "Time Info",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //DateTime starTime = DateTime.Now;
+
+            if (checkBoxShowTime.Checked)
+            {
+                var childParser = new ParserChild();
+                textBoxResult.Text = childParser.EvalExpression(Normalize(textBoxStringExpression.Text)).ToString();
+            }
+            else
+            {
+                var newParser = new ParserClass();
+                textBoxResult.Text = newParser.EvalExpression(Normalize(textBoxStringExpression.Text)).ToString();
+            }
+           
+            //MessageBox.Show($"Totally spent: {(DateTime.Now - starTime).TotalMilliseconds}", "Time Info",
+                //MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

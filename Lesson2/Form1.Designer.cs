@@ -33,6 +33,7 @@
             this.textBoxResult = new System.Windows.Forms.TextBox();
             this.label_expression = new System.Windows.Forms.Label();
             this.label_result = new System.Windows.Forms.Label();
+            this.checkBoxShowTime = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // textBoxStringExpression
@@ -77,11 +78,22 @@
             this.label_result.TabIndex = 4;
             this.label_result.Text = "Result";
             // 
+            // checkBoxShowTime
+            // 
+            this.checkBoxShowTime.AutoSize = true;
+            this.checkBoxShowTime.Location = new System.Drawing.Point(16, 23);
+            this.checkBoxShowTime.Name = "checkBoxShowTime";
+            this.checkBoxShowTime.Size = new System.Drawing.Size(112, 17);
+            this.checkBoxShowTime.TabIndex = 5;
+            this.checkBoxShowTime.Text = "Show parsing time";
+            this.checkBoxShowTime.UseVisualStyleBackColor = true;
+            // 
             // FormStringParser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(628, 342);
+            this.Controls.Add(this.checkBoxShowTime);
             this.Controls.Add(this.label_result);
             this.Controls.Add(this.label_expression);
             this.Controls.Add(this.textBoxResult);
@@ -101,6 +113,7 @@
         private System.Windows.Forms.TextBox textBoxResult;
         private System.Windows.Forms.Label label_expression;
         private System.Windows.Forms.Label label_result;
+        private System.Windows.Forms.CheckBox checkBoxShowTime;
     }
 }
 

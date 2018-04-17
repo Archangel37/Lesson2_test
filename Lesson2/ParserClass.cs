@@ -6,25 +6,31 @@ namespace Lesson2
 {
     internal class ParserClass
     {
+
+        protected string expr;
+        protected int index;
+
+
         /// <summary>
-        ///     (4) Публичное вычисление значение выражения из массива символов
+        ///     (4) Публичное вычисление значения выражения из массива символов, для перегрузки
         /// </summary>
         /// <param name="expr">массив символов</param>
         /// <returns></returns>
-        public static double EvalExpression(string expr)
+        public virtual double EvalExpression(string expr)
         {
-            return SummSub(expr);
+            this.expr = expr;
+            index = 0;
+            return SummSub();
         }
 
         /// <summary>
-        ///     (3) Получение сумм/вычитаний(та же сумма только число *(-1)) чисел  - Приватная, работает внутри класса
+        ///     (3) Получение сумм/вычитаний(та же сумма только число *(-1)) чисел  - Приватная, работает внутри класса//protected
         /// </summary>
         /// <param name="expr"></param>
         /// <returns></returns>
-        private static double SummSub(string expr)
+        protected double SummSub()
         {
-            int index = 0;
-            double x = MultDiv(expr, ref index);
+            double x = MultDiv();
             //работает без условия на длину
             while (true)
             {
@@ -32,7 +38,7 @@ namespace Lesson2
                 if (op != '+' && op != '-') //"ленивый" булев оператор - если первое условие не выполняется, то второе не сравнивается
                     return x; //если операция не та, возвращаем "as is"
                 index++;
-                double y = MultDiv(expr, ref index);
+                double y = MultDiv();
                 if (op == '+')
                     x += y;
                 else
@@ -46,10 +52,10 @@ namespace Lesson2
         /// <param name="expr"></param>
         /// <param name="index"></param>
         /// <returns></returns>
-        private static double MultDiv(string expr, ref int index)
+        private double MultDiv()
         {
             //получение double из выражения
-            double x = FactorialFunc(expr, ref index);
+            double x = FactorialFunc();
             //работает без условия на длину
             while (true)
             {
@@ -57,7 +63,7 @@ namespace Lesson2
                 if (op != '/' && op != '*') //"ленивый" булев оператор - если первое условие не выполняется, то второе не сравнивается
                     return x; //если операции не те, возвращаем "as is"
                 index++;
-                double y = FactorialFunc(expr, ref index);
+                double y = FactorialFunc();
                 if (op == '/')
                     x /= y;
                 else if (op == '*')
@@ -70,18 +76,16 @@ namespace Lesson2
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        private static double Fact(double x) => x == 0 ? 1 : x * Fact(x - 1);
+        private double Fact(double x) => x == 0 ? 1 : x * Fact(x - 1);
 
         /// <summary>
         ///     Парсинг факториала
         /// </summary>
-        /// <param name="expression"></param>
-        /// <param name="index"></param>
         /// <returns></returns>
-        private static double FactorialFunc(string expression, ref int index)
+        private double FactorialFunc()
         {
-            double x = GetDouble(expression, ref index);
-            if (index < expression.Length && expression[index] == '!')
+            double x = GetDouble();
+            if (index < expr.Length && expr[index] == '!')
             {
                 index++;
                 return Fact((int) x);
@@ -93,10 +97,8 @@ namespace Lesson2
         /// <summary>
         ///     (0) Получение числа из строки
         /// </summary>
-        /// <param name="expr"></param>
-        /// <param name="index"></param>
         /// <returns>(double)</returns>
-        private static double GetDouble(string expr, ref int index)
+        private double GetDouble()
         {
             string str_dbl = "0";
             while( char.IsDigit(expr[index]) || expr[index] == ',')
