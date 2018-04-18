@@ -38,7 +38,7 @@ namespace Lesson2
             }
             else
             {
-                var newParser = new ParserClass();
+                var newParser = new Parser();
                 textBoxResult.Text = newParser.EvalExpression(Normalize(textBoxStringExpression.Text)).ToString();
             }
            

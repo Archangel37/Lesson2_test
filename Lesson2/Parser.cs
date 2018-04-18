@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Lesson2
 {
-    internal class ParserClass
+    internal class Parser
     {
 
         protected string expr;
@@ -27,7 +27,7 @@ namespace Lesson2
         /// </summary>
         /// <param name="expr"></param>
         /// <returns></returns>
-        protected double SummSub()
+        private double SummSub()
         {
             double x = MultDiv();
             //работает без условия на длину

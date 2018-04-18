@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Lesson2
 {
-    class ParserChild: ParserClass
+    class ParserChild: Parser
     {
         public override double EvalExpression(string expr)
         {
