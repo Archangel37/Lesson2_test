@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Lesson2
 {
@@ -8,7 +7,6 @@ namespace Lesson2
 
         protected string expr;
         protected int index;
-
 
         /// <summary>
         ///     (4) Публичное вычисление значения выражения из массива символов, для перегрузки
@@ -64,7 +62,11 @@ namespace Lesson2
                 index++;
                 double y = FactorialFunc();
                 if (op == '/')
-                    x /= y;
+                {
+                    //!!!!!!!!!!!!!
+                    if (y == 0) throw new CustomException();
+                    else x /= y;
+                }
                 else if (op == '*')
                     x *= y;
             }
@@ -112,7 +114,7 @@ namespace Lesson2
             }
 
             //Посчитать количество запятых в числе, если больше 1 - кинуть ArgumentException()
-            if (str_dbl.ToCharArray().Count(x => x == ',') > 1) throw new ArgumentException("Too many commas!");
+            if (str_dbl.ToCharArray().Count(x => x == ',') > 1) throw new CustomException();
             return double.Parse(str_dbl);
         }
     }

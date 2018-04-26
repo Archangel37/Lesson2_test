@@ -29,21 +29,42 @@ namespace Lesson2
         /// <param name="e"></param>
         private void calculate_Click(object sender, EventArgs e)
         {
-            //DateTime starTime = DateTime.Now;
-
             if (checkBoxShowTime.Checked)
             {
                 var childParser = new ParserChild();
-                textBoxResult.Text = childParser.EvalExpression(Normalize(textBoxStringExpression.Text)).ToString();
+                try
+                {
+                    textBoxResult.Text = childParser.EvalExpression(Normalize(textBoxStringExpression.Text)).ToString();
+                }
+                catch (CustomException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    var exc = new CustomException();
+                    MessageBox.Show(exc.GetExceptionNeededInfo(ex), ex.Source, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
                 var newParser = new Parser();
-                textBoxResult.Text = newParser.EvalExpression(Normalize(textBoxStringExpression.Text)).ToString();
+
+                try
+                {
+                    textBoxResult.Text = newParser.EvalExpression(Normalize(textBoxStringExpression.Text)).ToString();
+                }
+                catch (CustomException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    var exc = new CustomException();
+                    MessageBox.Show(exc.GetExceptionNeededInfo(ex), ex.Source, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                
             }
-           
-            //MessageBox.Show($"Totally spent: {(DateTime.Now - starTime).TotalMilliseconds}", "Time Info",
-                //MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
