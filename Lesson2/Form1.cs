@@ -22,49 +22,36 @@ namespace Lesson2
         
 
         /// <summary>
-        ///     Собственно, само использование класса парсера ParserClass либо его потомка
-        ///     Парсим/вычисляем
+        ///     Собственно, само использование класса парсера ParserClass (убрал использование потомка)
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void calculate_Click(object sender, EventArgs e)
         {
-            if (checkBoxShowTime.Checked)
-            {
-                var childParser = new ParserChild();
-                try
-                {
-                    textBoxResult.Text = childParser.EvalExpression(Normalize(textBoxStringExpression.Text)).ToString();
-                }
-                catch (CustomException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                catch (Exception ex)
-                {
-                    var exc = new CustomException();
-                    MessageBox.Show(exc.GetExceptionNeededInfo(ex), ex.Source, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else
-            {
-                var newParser = new Parser();
+            JsonHelper.CreateLog();
 
-                try
-                {
-                    textBoxResult.Text = newParser.EvalExpression(Normalize(textBoxStringExpression.Text)).ToString();
-                }
-                catch (CustomException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                catch (Exception ex)
-                {
-                    var exc = new CustomException();
-                    MessageBox.Show(exc.GetExceptionNeededInfo(ex), ex.Source, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                
+            var _logEvent = new LogEvent
+            {
+                Expression = textBoxStringExpression.Text
+            };
+
+            DateTime startQuery = DateTime.Now;
+            _logEvent.QueryTime = startQuery;
+
+            var newParser = new Parser();
+
+            try
+            {
+                _logEvent.Result = newParser.EvalExpression(Normalize(textBoxStringExpression.Text));
+                _logEvent.Duration = DateTime.Now - startQuery;
+                textBoxResult.Text = _logEvent.Result.ToString();
             }
+            catch (CustomException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            JsonHelper.AddOneLogEvent(_logEvent);
         }
     }
 }
