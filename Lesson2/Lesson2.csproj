@@ -55,7 +55,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="JsonHelper.cs" />
+    <Compile Include="History.cs" />
     <Compile Include="LogEvent.cs" />
     <Compile Include="ParserChild.cs" />
     <Compile Include="Parser.cs" />
