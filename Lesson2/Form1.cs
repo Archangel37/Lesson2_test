@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -17,7 +18,7 @@ namespace Lesson2
         /// <summary>
         ///     Инициализированный объект класса History
         /// </summary>
-        History curHistory = new History();  
+        SessionLog curHistory = new SessionLog();  
 
 
         /// <summary>
@@ -37,15 +38,15 @@ namespace Lesson2
         private void calculate_Click(object sender, EventArgs e)
         {
             curHistory.EventsList.Add(new LogEvent { Expression = textBoxStringExpression.Text, QueryTime = DateTime.Now });
-            int _index = curHistory.EventsList.Count - 1;
+            int index = curHistory.EventsList.Count - 1;
 
             var newParser = new Parser();
 
             try
             {
-                curHistory.EventsList[_index].Result = newParser.EvalExpression(Normalize(textBoxStringExpression.Text));
-                curHistory.EventsList[_index].Duration = DateTime.Now - curHistory.EventsList[_index].QueryTime;
-                textBoxResult.Text = curHistory.EventsList[_index].Result.ToString();
+                curHistory.EventsList[index].Result = newParser.EvalExpression(Normalize(textBoxStringExpression.Text));
+                curHistory.EventsList[index].Duration = DateTime.Now - curHistory.EventsList[index].QueryTime;
+                textBoxResult.Text = curHistory.EventsList[index].Result.ToString(CultureInfo.InvariantCulture);
             }
             catch (CustomException ex)
             {
@@ -61,7 +62,7 @@ namespace Lesson2
         private void FormStringParser_FormClosing(object sender, FormClosingEventArgs e)
         {
             curHistory.SessionEndTime = DateTime.Now;
-            curHistory.SaveHistory();
+            History.SaveHistory(curHistory);
         }
     }
 }

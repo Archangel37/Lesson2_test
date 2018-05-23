@@ -1,24 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace Lesson2
 {
-    [Serializable]
-    class History
+    static class History
     {
-        public DateTime SessionStartTime;
-        public DateTime SessionEndTime;
-        public List<LogEvent> EventsList;
-
-        public History()
-        {
-            SessionStartTime = default(DateTime);
-            SessionEndTime = default(DateTime);
-            EventsList = new List<LogEvent>();
-        }
-
         /// <summary>
         ///     Приватная константа, чтоб изменять в одном месте
         /// </summary>
@@ -28,20 +15,19 @@ namespace Lesson2
         ///     Прочитать все логи, превратить в лист LogEvent-ов
         /// </summary>
         /// <returns></returns>
-        private static List<History> ReadLog()
+        private static List<SessionLog> ReadLog()
         {
             if (File.Exists(LogFileName) && new FileInfo(LogFileName).Length > 0)
             {
-                return JsonConvert.DeserializeObject<List<History>>(File.ReadAllText(LogFileName));
+                return JsonConvert.DeserializeObject<List<SessionLog>>(File.ReadAllText(LogFileName));
             }
-            return new List<History>();
+            return new List<SessionLog>();
         }
 
         /// <summary>
         ///     Записывает перебор элементов в файл логов
         /// </summary>
-        /// <param name="Logs"></param>
-        private static void WriteLogs(IEnumerable<History> Histories)
+        private static void WriteLogs(IEnumerable<SessionLog> Histories)
         {
             File.WriteAllText(LogFileName, JsonConvert.SerializeObject(Histories, Formatting.Indented));
         }
@@ -49,10 +35,10 @@ namespace Lesson2
         /// <summary>
         ///     Сохраняет текущую историю
         /// </summary>
-        public void SaveHistory()
+        public static void SaveHistory(SessionLog History)
         {
             var curLog = ReadLog();
-            curLog.Add(this);
+            curLog.Add(History);
             WriteLogs(curLog);
         }
     }
